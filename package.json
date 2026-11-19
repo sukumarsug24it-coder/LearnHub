@@ -1,0 +1,16 @@
+{
+  "name": "learnhub-root",
+  "version": "1.0.0",
+  "description": "LearnHub – Learning Resource Management System",
+  "scripts": {
+    "server": "cd backend && npm start",
+    "client": "cd frontend && npm run dev",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "build:client": "cd frontend && npm run build",
+    "seed": "cd backend && npm run seed"
+  },
+  "keywords": ["learnhub", "lms", "mern", "react", "express", "mongodb"],
+  "author": "LearnHub Team",
+  "license": "ISC"
+}
+

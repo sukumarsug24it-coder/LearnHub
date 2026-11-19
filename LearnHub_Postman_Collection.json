@@ -1,0 +1,286 @@
+{
+  "info": {
+    "_postman_id": "learnhub-api-collection",
+    "name": "LearnHub - Learning Resource Management API",
+    "description": "Postman API Collection for LearnHub Full-Stack Application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "health"]
+        }
+      }
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sarah Connor\",\n  \"email\": \"sarah@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"student\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login (Student)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student@learnhub.dev\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@learnhub.dev\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile (Me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courses (CRUD)",
+      "item": [
+        {
+          "name": "Read - Get All Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/courses?category=Web+Development&sort=popular",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "courses"],
+              "query": [
+                { "key": "category", "value": "Web Development" },
+                { "key": "sort", "value": "popular" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Read - Get Course by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/courses/course-1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "courses", "course-1"]
+            }
+          }
+        },
+        {
+          "name": "Create - Add New Course (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Advanced TypeScript & Design Patterns\",\n  \"shortDescription\": \"Master generics, utility types, and structural patterns.\",\n  \"description\": \"Comprehensive deep-dive into enterprise TypeScript applications.\",\n  \"category\": \"Programming\",\n  \"level\": \"Advanced\",\n  \"duration\": \"10 hours\",\n  \"lessons\": [\n    {\n      \"title\": \"1. Type Narrowing & Discriminated Unions\",\n      \"duration\": \"15 mins\",\n      \"videoUrl\": \"https://www.youtube.com/embed/nu_pCVPKzTk\",\n      \"content\": \"### Discriminated Unions in TypeScript\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/courses",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "courses"]
+            }
+          }
+        },
+        {
+          "name": "Update - Edit Course (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"duration\": \"20 hours\",\n  \"level\": \"Intermediate\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/courses/course-1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "courses", "course-1"]
+            }
+          }
+        },
+        {
+          "name": "Delete - Remove Course (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/courses/course-test",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "courses", "course-test"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Enrollment & Progress Tracking",
+      "item": [
+        {
+          "name": "Enroll in Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enrollments/course-1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enrollments", "course-1"]
+            }
+          }
+        },
+        {
+          "name": "Get My Enrolled Courses",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enrollments/my",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enrollments", "my"]
+            }
+          }
+        },
+        {
+          "name": "Check Enrollment Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enrollments/status/course-1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enrollments", "status", "course-1"]
+            }
+          }
+        },
+        {
+          "name": "Toggle Lesson Progress (Complete/Incomplete)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/enrollments/course-1/lessons/lesson-1-1/toggle",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "enrollments", "course-1", "lessons", "lesson-1-1", "toggle"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Analytics",
+      "item": [
+        {
+          "name": "Get Platform Metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "stats"]
+            }
+          }
+        },
+        {
+          "name": "List All Registered Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    }
+  ]
+}
+
